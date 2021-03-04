@@ -27,6 +27,7 @@ struct GpioRegs {
     reg32 pupd_enable_clocks[2];
 };
 
+// GPIO_BASE = (MMIO_BASE + 0x00200000) 
 #define REGS_GPIO ((struct GpioRegs *) (PBASE + 0x00200000))
 
 #endif //GPIO_REG_H
