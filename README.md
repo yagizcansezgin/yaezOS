@@ -1,1 +1,1 @@
-yaezOS is a operating system that aims to learn fundamentals of system design from scratch with bare-metal programming on ARMv8-A architecture.
+yaezOS is a bare-metal operating system that aims to learn the basics of system design from scratch on ARMv8-A architecture.
