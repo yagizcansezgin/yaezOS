@@ -1,5 +1,5 @@
-#ifndef AUX_H
-#define AUX_H
+#ifndef AUXILARY_H
+#define AUXILARY_H
 
 #include "common.h"
 #include "peripherals/base.h"
@@ -24,4 +24,4 @@ struct AuxRegs {
 
 #define REGS_AUX ((struct AuxRegs*)(PBASE + 0x00215000))
 
-#endif //AUX_H
+#endif //AUXILARY_H
