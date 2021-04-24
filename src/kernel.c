@@ -2,6 +2,7 @@
 #include "mini_uart.h"
 #include "printf.h"
 #include "utils.h"
+#include "irq.h"
 
 void putc(void *p, char c) {
     if (c == '\n') {
@@ -14,7 +15,11 @@ void putc(void *p, char c) {
 void kernel_main() {
     uart_init();
     init_printf(0, putc);
-    printf("yaezOS initializing...\n");
+    printf("yaezOSv1.0 initializing...\n");
+
+    irq_init_vectors();
+    enable_interrupt_controller();
+    irq_enable();
 
 #if RPI_VERSION == 3
     printf("\t Board: Raspberry PI 3\n");
@@ -26,6 +31,5 @@ void kernel_main() {
 
     printf("\nException level: %d\n", get_el());
     while (1){
-        uart_send(uart_recv());
     }
 }

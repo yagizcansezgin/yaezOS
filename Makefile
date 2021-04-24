@@ -1,6 +1,6 @@
-RPI_VERSION ?= 4
+RPI_VERSION ?= 3
 
-BOOTMNT ?= /media/sf_virtual_box_shared
+BOOTMNT ?= /media/yagiz/boot
 
 ARMGNU ?= aarch64-linux-gnu
 
@@ -35,17 +35,9 @@ DEP_FILES = $(OBJ_FILES:%.o=%.d)
 
 kernel8.img: $(SRC_DIR)/linker.ld $(OBJ_FILES)
 	@echo "Building for RPI $(value RPI_VERSION)"
-	@echo "Deploy to $(value BOOTMNT)"
 	@echo ""
 	$(ARMGNU)-ld -T $(SRC_DIR)/linker.ld -o $(BUILD_DIR)/kernel8.elf $(OBJ_FILES)
 	$(ARMGNU)-objcopy $(BUILD_DIR)/kernel8.elf -O binary kernel8.img
-ifeq ($(RPI_VERSION), 4)
-	cp kernel8.img $(BOOTMNT)/kernel8-rpi4.img
-else
-	cp kernel8.img $(BOOTMNT)/
-endif
-	cp config.txt $(BOOTMNT)/
-	sync
 
 armstub/build/armstub_s.o: armstub/src/armstub.S
 	mkdir -p $(@D)
@@ -55,6 +47,16 @@ armstub: armstub/build/armstub_s.o
 	$(ARMGNU)-ld --section-start=.text=0 -o armstub/build/armstub.elf armstub/build/armstub_s.o
 	$(ARMGNU)-objcopy armstub/build/armstub.elf -O binary armstub-new.bin
 	cp armstub-new.bin $(BOOTMNT)/
+	sync
+
+flash:
+	@echo "Deploy to $(value BOOTMNT)"
+ifeq ($(RPI_VERSION), 4)
+	cp kernel8.img $(BOOTMNT)/kernel8-rpi4.img
+else
+	cp kernel8.img $(BOOTMNT)/
+endif
+	cp config.txt $(BOOTMNT)/
 	sync
 
 qemu:
