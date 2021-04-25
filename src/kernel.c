@@ -3,6 +3,7 @@
 #include "printf.h"
 #include "utils.h"
 #include "irq.h"
+#include "timer.h"
 
 void putc(void *p, char c) {
     if (c == '\n') {
@@ -20,6 +21,7 @@ void kernel_main() {
     irq_init_vectors();
     enable_interrupt_controller();
     irq_enable();
+    timer_init();
 
 #if RPI_VERSION == 3
     printf("\t Board: Raspberry PI 3\n");

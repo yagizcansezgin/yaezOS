@@ -4,11 +4,14 @@
 #include "peripherals/base.h"
 #include "common.h"
 
-#include "peripherals/base.h"
-#include "common.h"
-
+// 6.2.4
+// IRQ 0 and 3 are used by GPU internally
 enum vc_irqs {
-    AUX_IRQ = (1 << 29)
+    TIMER_IRQ_0     = (1 << 0),
+    TIMER_IRQ_1     = (1 << 1), // Usable
+    TIMER_IRQ_2     = (1 << 2),
+    TIMER_IRQ_3     = (1 << 3), // Usable
+    AUX_IRQ         = (1 << 29)
 };
 
 struct arm_irq_regs_2711 {
